@@ -1,6 +1,16 @@
-# vue-spring-docker-kubernetes-istio
+- [1. 개요](#1-%EA%B0%9C%EC%9A%94)
+  - [1.1. Skill-set](#11-skill-set)
+  - [1.2. 폴더 설명](#12-%ED%8F%B4%EB%8D%94-%EC%84%A4%EB%AA%85)
+- [2. 작업 흐름](#2-%EC%9E%91%EC%97%85-%ED%9D%90%EB%A6%84)
+  - [2.1. 로컬 개발 환경](#21-%EB%A1%9C%EC%BB%AC-%EA%B0%9C%EB%B0%9C-%ED%99%98%EA%B2%BD)
+  - [2.2. docker 환경](#22-docker-%ED%99%98%EA%B2%BD)
+    - [2.2.1. docker build](#221-docker-build)
+    - [2.2.2. docker run](#222-docker-run)
+  - [2.3. Kubernetes 환경](#23-kubernetes-%ED%99%98%EA%B2%BD)
 
-## Skill-set
+# 1. 개요
+
+## 1.1. Skill-set
 - Vue.js
 - Spring boot
 - Node.js
@@ -9,25 +19,47 @@
 - Kubernetes
 - istio
 
-## Command
+## 1.2. 폴더 설명
 
-단독 docker build/run 부터 docker-compose up/down 그리고 Kubernetes
+| 폴더명               | 용도                          | 개발환경    |
+| -------------------- | -------------------------- | ----------- |
+| backend-spring | send a spring greeting message   | Spring boot    |
+| backend-node   | send a node greeting message     | node.js |
+| bff            | mediation (Backend for frontend) | Spring boot |
+| frontend-vue   | integrate all micro services     | Vue.js |
 
-### Docker
+# 2. 작업 흐름
+
+> 로컬 개발 환경 > docker (compose) 환경 > kubenetes 환경 > + istio
+
+## 2.1. 로컬 개발 환경
+
+각자 사용하는 IDE나 CLI command를 이용하여 구동시키되 (이왕이면) backend-xxx > bff > frontend-vue 순으로 구동시킨다.
+
+## 2.2. docker 환경
+
+### 2.2.1. docker build
+
+> 각 마이크로서비스 내에 Dockerfile 구성 후 빌드
 
 ```sh
 docker build . -t emoket/frontend-vue:1.0.0
 docker build . -t emoket/bff:1.0.0
 docker build . -t emoket/backend-node:1.0.0
 docker build . -t emoket/backend-spring:1.0.0
+```
 
+### 2.2.2. docker run
+
+> docker 환경에서 테스트 시 서비스 간 호출을 할 수 있도록 `--link` 옵션을 적용하는 것이 핵심!
+
+``` sh
 docker run --name backend-node -p 8083:8083 -d emoket/backend-node:1.0.0
 docker run --name backend-spring -p 8082:8082 -d emoket/backend-spring:1.0.0
 docker run --name bff -d -p 8081:8081 -e 'BACKEND_SPRING_HOST=backend-spring' -e 'BACKEND_SPRING_PORT=8082' -e 'BACKEND_NODE_HOST=backend-node' -e 'BACKEND_NODE_PORT=8083' --link backend-node --link backend-spring emoket/bff:1.0.0
 docker run --name frontend-vue -p 8080:8080 -d --link bff emoket/frontend-vue:1.0.0
 ```
 
-### Docker Compose
+## 2.3. Kubernetes 환경
 
-```sh
-```
+> helm chart 를 이용하여 모든 구성을 한 번에 설치
