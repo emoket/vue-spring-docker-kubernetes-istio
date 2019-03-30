@@ -1,0 +1,41 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Eclipse #
+.settings
+.project
+.classpath
+.studio
+target
+
+# Apple #
+.DS_Store
+
+# Intellij #
+*.idea
+*.iml
+*.log
+
+# logback
+logback.out.xml
+
+backend-node/node_modules/
+backend-spring/src/main/resources/public/
+backend-spring/target
+bff/target
+frontend-vue/dist/
+frontend-vue/node/
+frontend-vue/node_modules/
+frontend-vue/npm-debug.log
+frontend-vue/target
+frontend-vue/test-output
+frontend-vue/tests/e2e/reports
+frontend-vue/tests/unit/coverage
+frontend-vue/yarn-error.log
+frontend-vue/yarn.lock
+
+!.mvn/wrapper/maven-wrapper.jar
