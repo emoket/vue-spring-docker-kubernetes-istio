@@ -23,9 +23,9 @@
 
 | 폴더명               | 용도                          | 개발환경    |
 | -------------------- | -------------------------- | ----------- |
-| backend-spring | send a spring greeting message   | Spring boot    |
 | backend-node   | send a node greeting message     | node.js |
-| bff            | mediation (Backend for frontend) | Spring boot |
+| backend-spring | send a spring greeting message   | Spring boot    |
+| bff            | gateway (backend for frontend)   | Spring boot |
 | frontend-vue   | integrate all micro services     | Vue.js |
 
 # 2. 작업 흐름
