@@ -40,13 +40,17 @@
 
 ### 2.2.1. docker build
 
-> 각 마이크로서비스 내에 Dockerfile 구성 후 빌드
+> 각 마이크로서비스 내에 Dockerfile 구성 후 메이븐 도커 빌드
+
+각 프로젝트 폴더 내 Dockerfile이 위치해 있으며, Node 프로젝트는 `root` 폴더에, Spring boot 프로젝트의 경우 `src/main/docker` 폴더 내 위치해 있다.
 
 ```sh
+# Node 프로젝트 (backend-node/frontend-vue)
 docker build . -t emoket/frontend-vue:1.0.0
-docker build . -t emoket/bff:1.0.0
 docker build . -t emoket/backend-node:1.0.0
-docker build . -t emoket/backend-spring:1.0.0
+
+# Spring boot 프로젝트 (bff/backend-spring)
+mvn clean packge docker:build
 ```
 
 ### 2.2.2. docker run
