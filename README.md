@@ -5,7 +5,10 @@
   - [2.1. 로컬 개발 환경](#21-%EB%A1%9C%EC%BB%AC-%EA%B0%9C%EB%B0%9C-%ED%99%98%EA%B2%BD)
   - [2.2. docker 환경](#22-docker-%ED%99%98%EA%B2%BD)
     - [2.2.1. docker build](#221-docker-build)
+      - [2.2.1.1. Node 프로젝트 docker build](#2211-node-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-docker-build)
+      - [2.2.1.2. Spring boot 프로젝트 docker build](#2212-spring-boot-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-docker-build)
     - [2.2.2. docker run](#222-docker-run)
+    - [2.2.3. docker-compose up](#223-docker-compose-up)
   - [2.3. Kubernetes 환경](#23-kubernetes-%ED%99%98%EA%B2%BD)
 
 # 1. 개요
@@ -42,7 +45,7 @@
 
 Dockerfile은 Node 프로젝트의 경우 `root` 폴더에, Spring boot 프로젝트의 경우 `src/main/docker` 폴더 내 위치해 있다.
 
-#### Node 프로젝트 docker build
+#### 2.2.1.1. Node 프로젝트 docker build
 
 > backend-node / frontend-vue
 
@@ -51,7 +54,7 @@ docker build . -t emoket/frontend-vue:1.0.0
 docker build . -t emoket/backend-node:1.0.0
 ```
 
-#### Spring boot 프로젝트 docker build
+#### 2.2.1.2. Spring boot 프로젝트 docker build
 
 > backend-spring / bff
 
