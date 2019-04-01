@@ -40,17 +40,25 @@
 
 ### 2.2.1. docker build
 
-> 각 마이크로서비스 내에 Dockerfile 구성 후 메이븐 도커 빌드
+Dockerfile은 Node 프로젝트의 경우 `root` 폴더에, Spring boot 프로젝트의 경우 `src/main/docker` 폴더 내 위치해 있다.
 
-각 프로젝트 폴더 내 Dockerfile이 위치해 있으며, Node 프로젝트는 `root` 폴더에, Spring boot 프로젝트의 경우 `src/main/docker` 폴더 내 위치해 있다.
+#### Node 프로젝트 docker build
+
+> backend-node / frontend-vue
 
 ```sh
-# Node 프로젝트 (backend-node/frontend-vue)
 docker build . -t emoket/frontend-vue:1.0.0
 docker build . -t emoket/backend-node:1.0.0
+```
 
-# Spring boot 프로젝트 (bff/backend-spring)
-mvn clean packge docker:build
+#### Spring boot 프로젝트 docker build
+
+> backend-spring / bff
+
+docker-maven-plugin 을 이용하여 빌드
+
+```sh
+mvn clean package docker:build
 ```
 
 ### 2.2.2. docker run
@@ -63,6 +71,16 @@ docker run --name backend-spring -p 8082:8082 -d emoket/backend-spring:1.0.0
 docker run --name bff -d -p 8081:8081 -e 'BACKEND_SPRING_HOST=backend-spring' -e 'BACKEND_SPRING_PORT=8082' -e 'BACKEND_NODE_HOST=backend-node' -e 'BACKEND_NODE_PORT=8083' --link backend-node --link backend-spring emoket/bff:1.0.0
 docker run --name frontend-vue -p 8080:8080 -d --link bff emoket/frontend-vue:1.0.0
 ```
+
+### 2.2.3. docker-compose up
+
+> 컨테이너가 많아질 경우 docker run 명령어를 일일이 수행하는 것에는 한계가 있기에 docker-compose 를 사용한다.
+
+```sh
+docker-compose up -d
+```
+
+- \-d Detached mode: Run containers in the background
 
 ## 2.3. Kubernetes 환경
 
