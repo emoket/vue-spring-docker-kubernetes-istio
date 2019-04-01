@@ -1,4 +1,4 @@
-FROM node:lts
+FROM node:10.15.3-alpine
 
 # 이미지 안에 애플리케이션 코드를 넣기 위해 디렉터리를 생성
 WORKDIR /usr/src/app

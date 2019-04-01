@@ -2,24 +2,23 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">/Hello</router-link> |
-      <router-link to="/callservice">/Service</router-link> |
-      <router-link to="/bootstrap">/Bootstrap</router-link> |
-      <router-link to="/user">/User</router-link>
+      <router-link to="/callservice">Service</router-link> |
+      <router-link to="/bootstrap">Bootstrap</router-link> |
+      <router-link to="/user">User</router-link>
     </div>
     <router-view :title="title"></router-view>
   </div>
 </template>
 
 <script>
-
 export default {
-  name: 'app',
-  data () {
+  name: "App",
+  data() {
     return {
-      title: 'Vue.js with Spring Boot'
-    }
+      title: "Vue.js with Spring Boot"
+    };
   }
-}
+};
 </script>
 
 <style lang="scss">
