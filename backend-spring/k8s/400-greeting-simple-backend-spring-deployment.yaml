@@ -1,22 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: greeting-simple-backend-spring
+  name: deployment-backend-spring
   labels:
-    app: backend-spring
+    appName: greeting
+    svcName: backend-spring
+    version: 1.0.0
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: backend-spring
+      appName: greeting
+      svcName: backend-spring
+      version: 1.0.0
   template:
     metadata:
       labels:
-        app: backend-spring
+        appName: greeting
+        svcName: backend-spring
+        version: 1.0.0
     spec:
       containers:
       - name: backend-spring
-        image: emoket/backend-spring:1.0.0
+        image: "emoket/backend-spring:1.0.0"
         imagePullPolicy: Always
         ports:
           - name: default
