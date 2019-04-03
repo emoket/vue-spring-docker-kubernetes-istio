@@ -21,12 +21,10 @@ public class BffController {
     private static final Logger LOG = LoggerFactory.getLogger(BffController.class);
 
     // 스프링부트 백엔드 호출 서비스
-    @Value("${backend.spring.host}") private String backendSpringHost;
-    @Value("${backend.spring.port}") private String backendSpringPort;
+    @Value("${target.backend.spring.name}") private String backendSpringHost;
 
     // 노드 백엔드 호출 서비스
-    @Value("${backend.node.host}") private String backendNodeHost;
-    @Value("${backend.node.port}") private String backendNodePort;
+    @Value("${target.backend.node.name}") private String backendNodeHost;
 
     // Greeting Service for Spring
     @GetMapping(path = "/hello/spring")
@@ -42,7 +40,7 @@ public class BffController {
 
         // 백엔드 호출
         ResponseEntity<String> response = restTemplate.exchange(
-            "http://" + backendSpringHost + ":" + backendSpringPort + "/api/hello/spring",
+            "http://" + backendSpringHost + "/api/hello/spring",
             HttpMethod.GET,
             null,
             String.class
@@ -71,7 +69,7 @@ public class BffController {
 
         // 백엔드 호출
         ResponseEntity<String> response = restTemplate.exchange(
-            "http://" + backendSpringHost + ":" + backendSpringPort + "/api/user/" + id,
+            "http://" + backendSpringHost + "/api/user/" + id,
             HttpMethod.GET,
             null,
             String.class
@@ -100,7 +98,7 @@ public class BffController {
 
         // Node Backend Service 호출
         ResponseEntity<String> response = restTemplate.exchange(
-            "http://" + backendNodeHost + ":" + backendNodePort + "/api/hello/node",
+            "http://" + backendNodeHost + "/api/hello/node",
             HttpMethod.GET,
             null,
             String.class
@@ -119,7 +117,7 @@ public class BffController {
     @RequestMapping(path = "/user", method = RequestMethod.POST)
     public String passingAddNewUser(@RequestParam String firstName, @RequestParam String lastName) {
         User user = new User(firstName, lastName);
-        String url = "http://" + backendSpringHost + ":" + backendSpringPort + "/api/user";
+        String url = "http://" + backendSpringHost + "/api/user";
         LOG.info(url);
         ResponseEntity<String> response = restTemplate.postForEntity(url, user, String.class);
         LOG.info(response.getBody());

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: greeting-simple-bff
+  labels:
+    app: bff
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: bff
+  template:
+    metadata:
+      labels:
+        app: bff
+    spec:
+      containers:
+      - name: bff
+        image: emoket/bff:1.0.0
+        imagePullPolicy: Always
+        ports:
+          - name: default
+            containerPort: 8081
+            protocol: TCP
+        env:
+        - name: target.backend.spring.name
+          value: backend-spring
+        - name: target.backend.node.name
+          value: backend-node
+#        livenessProbe:
+#          httpGet:
+#            path: /actuator/health
+#            port: default
+#          initialDelaySeconds: 10
+#          periodSeconds: 10
+#        readinessProbe:
+#          httpGet:
+#            path: /actuator/health
+#            port: default
+#          initialDelaySeconds: 10
+#          periodSeconds: 10
+

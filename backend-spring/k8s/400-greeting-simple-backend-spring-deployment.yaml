@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: greeting-simple-backend-spring
+  labels:
+    app: backend-spring
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend-spring
+  template:
+    metadata:
+      labels:
+        app: backend-spring
+    spec:
+      containers:
+      - name: backend-spring
+        image: emoket/backend-spring:1.0.0
+        imagePullPolicy: Always
+        ports:
+          - name: default
+            containerPort: 8082
+            protocol: TCP
+#        livenessProbe:
+#          httpGet:
+#            path: /actuator/health
+#            port: default
+#          initialDelaySeconds: 10
+#          periodSeconds: 10
+#        readinessProbe:
+#          httpGet:
+#            path: /actuator/health
+#            port: default
+#          initialDelaySeconds: 10
+#          periodSeconds: 10
+

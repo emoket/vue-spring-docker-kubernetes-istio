@@ -1,0 +1,54 @@
+{{- $releaseName := .Release.Name -}}
+{- range .Values.deployments }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "greeting-simple.fullname" $ }}-{{ .name }}
+  labels:
+    app: {{ templte "greeting-simple.name" $ }}-{{ .name }}-{{ .image.tag }}
+    chart: {{ template "greeting-simple.chart" $ }}
+    release: {{ $releaseName }}
+spec:
+  replicas: {{ .replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .name }}-{{ .image.tag }}
+      chart: {{ templte "greeting-simple.chart" $ }}
+      release: {{ $releaseName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .name }}-{{ .image.tag }}
+        chart: {{ templte "greeting-simple.chart" $ }}
+        release: {{ $releaseName }}
+    spec:
+      containers:
+        - name: {{ .name }}
+          image: "{{ .image.repository }}:{{ .image.tag }}"
+          imagePullPolicy: {{ .image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

@@ -1,0 +1,13 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: bff
+
+target:
+  backend:
+    spring:
+      name: backend-spring
+    node:
+      name: backend-node
